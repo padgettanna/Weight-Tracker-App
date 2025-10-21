@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.WeightTracker" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/apple_green</item>
+        <item name="colorPrimaryVariant">@color/pine_green</item>
+        <item name="colorOnPrimary">@color/dark_green</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/lime_green</item>
+        <item name="colorSecondaryVariant">@color/pine_green2</item>
+        <item name="colorOnSecondary">@color/background_green</item>
+        <!-- Status bar color. -->
+        <item name="android:windowBackground">@drawable/gradient_background</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+</resources>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".UpdateDeleteActivity">
+
+    <TextView
+        android:id="@+id/textUpdateDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_or_delete"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:textSize="@dimen/text_size_header"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/editTextDate"
+        android:text="@string/date"
+        android:textSize="@dimen/text_size_label"
+        app:layout_constraintBottom_toTopOf="@id/editTextDate"
+        app:layout_constraintStart_toStartOf="@id/editTextDate" />
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/vertical_spacing2"
+        android:hint="@string/date_hint"
+        android:ems="10"
+        android:inputType="text"
+        android:text=""
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textUpdateDelete"
+        tools:ignore="TextFields" />
+
+    <TextView
+        android:id="@+id/textWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/editTextWeight"
+        android:text="@string/weight"
+        android:textSize="@dimen/text_size_label"
+        app:layout_constraintBottom_toTopOf="@id/editTextWeight"
+        app:layout_constraintStart_toStartOf="@id/editTextWeight" />
+
+    <EditText
+        android:id="@+id/editTextWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="number"
+        android:text=""
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextDate" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonUpdate"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/update"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextWeight" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonDelete"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/delete"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonUpdate" />
+</androidx.constraintlayout.widget.ConstraintLayout>

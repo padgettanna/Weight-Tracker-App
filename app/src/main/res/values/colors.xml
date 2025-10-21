@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="yellow">#FFF0FFA0</color>
+    <color name="background_green">#C2E6C5</color>
+    <color name="apple_green">#FF91D296</color>
+    <color name="lime_green">#88CE5F</color>
+    <color name="pine_green">#FF00736E</color>
+    <color name="pine_green2">#024B47</color>
+    <color name="dark_green">#FF002D2D</color>
+    <color name="button_start">#024B47</color>
+    <color name="button_end">#FF002D2D</color>
+    <color name="button_start_pressed">#001B1B</color>
+    <color name="button_end_pressed">#FF001F1F</color>
+    <color name="button_start_disabled">#AA77B074</color>
+    <color name="button_end_disabled">#AA70B64E</color>
+    <color name="button_text">#C2E6C5</color>
+    <color name="header_color">#FF002D2D</color>
+    <color name="text">#FF002D2D</color>
+</resources>

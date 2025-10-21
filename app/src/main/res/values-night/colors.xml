@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="button_start">#88CE5F</color>
+    <color name="button_end">#FF91D296</color>
+    <color name="button_start_pressed">#FF77B074</color>
+    <color name="button_end_pressed">#FF70B64E</color>
+    <color name="button_start_disabled">#AA024B47</color>
+    <color name="button_end_disabled">#AA88CE5F</color>
+    <color name="button_text">#FF002D2D</color>
+    <color name="header_color">#88CE5F</color>
+    <color name="text">#C2E6C5</color>
+</resources>

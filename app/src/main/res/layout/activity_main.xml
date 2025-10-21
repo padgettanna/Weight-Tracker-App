@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textGreeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/greeting"
+        android:textSize="@dimen/text_size_header"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textGoalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/vertical_spacing2"
+        android:text="@string/goal_weight_label"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textGreeting" />
+
+    <TextView
+        android:id="@+id/textGoalValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_spacing2"
+        android:layout_marginEnd="4dp"
+        android:text=""
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintEnd_toStartOf="@id/textUnits"
+        app:layout_constraintTop_toBottomOf="@id/textGreeting" />
+
+    <TextView
+        android:id="@+id/textUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_spacing2"
+        android:layout_marginEnd="30dp"
+        android:text="@string/units"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textGreeting" />
+
+    <TextView
+        android:id="@+id/textCurrentWeightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="@string/current_weight_label"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textGoalLabel" />
+
+    <TextView
+        android:id="@+id/textCurrentValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:layout_marginEnd="4dp"
+        android:text=""
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintEnd_toStartOf="@id/textUnits2"
+        app:layout_constraintTop_toBottomOf="@id/textGoalValue" />
+
+    <TextView
+        android:id="@+id/textUnits2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:layout_marginEnd="30dp"
+        android:text="@string/units"
+        android:textSize="@dimen/text_size_header"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textGoalValue" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonAdd"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="@string/new_weight"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textCurrentWeightLabel" />
+
+    <EditText
+        android:id="@+id/editTextNewWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:autofillHints=""
+        android:visibility="gone"
+        android:ems="6"
+        android:hint="@string/new_weight_hint"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        app:layout_constraintHorizontal_bias="0.346"
+        app:layout_constraintStart_toStartOf="@id/buttonAdd"
+        app:layout_constraintTop_toBottomOf="@id/buttonAdd" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonSave"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:visibility="gone"
+        android:text="@string/save"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.35"
+        app:layout_constraintEnd_toEndOf="@id/buttonAdd"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintTop_toBottomOf="@id/buttonAdd" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonUpdateGoalWeight"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="@string/update_goal_weight"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonSave" />
+
+    <EditText
+        android:id="@+id/editTextNewGoalWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:autofillHints=""
+        android:visibility="gone"
+        android:ems="6"
+        android:hint="@string/new_weight_hint"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        app:layout_constraintHorizontal_bias="0.346"
+        app:layout_constraintStart_toStartOf="@id/buttonUpdateGoalWeight"
+        app:layout_constraintTop_toBottomOf="@id/buttonUpdateGoalWeight" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonSaveGoal"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:visibility="gone"
+        android:text="@string/save"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.35"
+        app:layout_constraintEnd_toEndOf="@id/buttonUpdateGoalWeight"
+        app:layout_constraintHorizontal_bias="0.086"
+        app:layout_constraintTop_toBottomOf="@id/buttonUpdateGoalWeight" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonViewLog"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="@string/view_log"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonSaveGoal" />
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/vertical_spacing"
+        android:paddingBottom="@dimen/vertical_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/logo_small" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

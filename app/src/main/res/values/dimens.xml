@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_label">18sp</dimen>
+    <dimen name="text_size_header">32sp</dimen>
+    <dimen name="edit_text_height">50dp</dimen>
+    <dimen name="button_height">60dp</dimen>
+    <dimen name="button_width">0dp</dimen>
+    <dimen name="button_padding">24dp</dimen>
+    <dimen name="text_size_button">20sp</dimen>
+    <dimen name="vertical_spacing">24dp</dimen>
+    <dimen name="vertical_spacing2">48dp</dimen>
+</resources>

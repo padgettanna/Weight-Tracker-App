@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context=".SignUpActivity">
+
+    <TextView
+        android:id="@+id/textCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_account"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:textSize="@dimen/text_size_header"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:labelFor="@id/editTextName"
+        android:textSize="@dimen/text_size_label"
+        app:layout_constraintBottom_toTopOf="@id/editTextName"
+        app:layout_constraintStart_toStartOf="@id/editTextName" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/vertical_spacing2"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textCreateAccount" />
+
+    <TextView
+        android:id="@+id/textGoalWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goal_weight"
+        android:labelFor="@id/editTextGoalWeight"
+        android:textSize="@dimen/text_size_label"
+        app:layout_constraintBottom_toTopOf="@id/editTextGoalWeight"
+        app:layout_constraintStart_toStartOf="@id/editTextGoalWeight" />
+
+    <EditText
+        android:id="@+id/editTextGoalWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="number"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextName" />
+
+    <TextView
+        android:id="@+id/textEmail2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:labelFor="@id/editTextEmail2"
+        android:textSize="@dimen/text_size_label"
+        app:layout_constraintBottom_toTopOf="@id/editTextEmail2"
+        app:layout_constraintStart_toStartOf="@id/editTextEmail2" />
+
+    <EditText
+        android:id="@+id/editTextEmail2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:hint="@string/email_placeholder"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextGoalWeight" />
+
+    <TextView
+        android:id="@+id/textPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:labelFor="@id/editTextPassword2"
+        android:textSize="@dimen/text_size_label"
+        app:layout_constraintBottom_toTopOf="@id/editTextPassword2"
+        app:layout_constraintStart_toStartOf="@id/editTextPassword2" />
+
+    <EditText
+        android:id="@+id/editTextPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/edit_text_height"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="textPassword"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonSignUp2"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:textSize="@dimen/text_size_button"
+        android:textStyle="bold"
+        android:text="@string/sign_up"
+        android:background="@drawable/button_background_selector"
+        android:textColor="@color/button_text"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextPassword2" />
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_spacing2"
+        android:paddingBottom="@dimen/vertical_spacing"
+        android:layout_marginBottom="@dimen/vertical_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:srcCompat="@drawable/logo_small" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

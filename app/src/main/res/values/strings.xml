@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Weight Tracker</string>
+    <string name="email">Email</string>
+    <string name="welcome">Welcome!</string>
+    <string name="login_to_your_account">Login to Your Account</string>
+    <string name="password">Password</string>
+    <string name="login">Sign In</string>
+    <string name="no_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_account">Create Account</string>
+    <string name="greeting">Hello, User!</string>
+    <string name="goal_weight">Goal Weight</string>
+    <string name="goal_weight_label">Goal Weight</string>
+    <string name="current_weight_label">Current Weight</string>
+    <string name="new_weight">Enter New Weight</string>
+    <string name="view_log">View Log</string>
+    <string name="new_weight_hint">Enter Weight</string>
+    <string name="save">Save</string>
+    <string name="date">Date</string>
+    <string name="weight">Weight</string>
+    <string name="name">First Name</string>
+    <string name="update_goal_weight">Update Goal Weight</string>
+    <string name="guest_access">Continue as guest</string>
+    <string name="update_or_delete">Update or Delete Entry</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="date_hint">yyyy-mm-dd</string>
+    <string name="email_placeholder">example@email.com</string>
+    <string name="units">lb</string>
+</resources>
