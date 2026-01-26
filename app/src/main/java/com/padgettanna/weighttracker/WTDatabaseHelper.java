@@ -1,5 +1,9 @@
 package com.padgettanna.weighttracker;
 
+import com.padgettanna.weighttracker.model.WeightEntry;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,15 +14,21 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 /**
- * Database helper class manages the SQLite database for the Weight Tracker app.
- * - Contains three tables: weight_log (stores individual weight entries)
- *                        user_table (stores user personal data)
- *                        goal_table (stores user's goal weight)
- * - Contains methods to create, read, update, and delete data from the database
+ * Database helper class for the Weight Tracker app.
+ * Responsibilities:
+ * - Manages SQLite schema creation and upgrades
+ * - Performs CRUD operations for users, goals, and weight entries
+ * - Enforces basic validation rules for weight and date values
+ * This class intentionally returns boolean results for write operations
+ * to allow calling activities to handle validation feedback and UI flow.
  */
 public class WTDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
+    // Validation constraints for weight entries (used by add/update operations)
+    private static final int MIN_WEIGHT = 50;
+    private static final int MAX_WEIGHT = 999;
+
     // Database configuration
     private static final String DATABASE_NAME = "WeightTracker.db";
     private static final int DATABASE_VERSION = 7;
@@ -81,33 +91,61 @@ public class WTDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Add new weight to weight_log table
-    void addWeight(String date, int weight, String email) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    /**
+     * Inserts a new weight entry for the given user.
+     *
+     * @return true if the entry was successfully inserted; false if validation fails
+     *         or the database insert does not succeed.
+     */
+    boolean addWeight(String date, int weight, String email) {
+        if (!isValidWeight(weight) || !isValidDate(date)) {
+            return false;
+        }
+
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_WEIGHT, weight);
         cv.put(COLUMN_USER_EMAIL, email);
 
-        long result = db.insert(TABLE_LOG, null, cv);
-
-        if (result == -1) {
-            Toast.makeText(context, "Failed to save new weight", Toast.LENGTH_SHORT).show();
-        }
-
-        else {
-            Toast.makeText(context, "New weight is saved!", Toast.LENGTH_SHORT).show();
-        }
+        return db.insert(TABLE_LOG, null, cv) != -1;
     }
 
-    // Read all weight entries from weight_log table
-    Cursor readAllData(String email) {
+    /**
+     * Retrieves all weight entries for a given user and converts them
+     * into a list of WeightEntry objects for algorithmic processing.
+     */
+    public List<WeightEntry> getWeightEntries(String userEmail) {
+        List<WeightEntry> entries = new ArrayList<>();
+
+        if (userEmail == null || userEmail.isBlank()) {
+            return entries;
+        }
+
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_LOG + " WHERE "
-                + COLUMN_USER_EMAIL + "=? ORDER BY " + COLUMN_ID + " DESC ", new String[]{email});
-        return cursor;
+
+        Cursor cursor = db.rawQuery(
+                "SELECT " + COLUMN_ID + ", " + COLUMN_DATE + ", " + COLUMN_WEIGHT +
+                        " FROM " + TABLE_LOG +
+                        " WHERE " + COLUMN_USER_EMAIL + " = ?",
+                new String[]{ userEmail }
+        );
+
+        while (cursor.moveToNext()) {
+            try {
+                entries.add(new WeightEntry(
+                        cursor.getInt(0),
+                        LocalDate.parse(cursor.getString(1)),
+                        cursor.getInt(2)
+                ));
+            } catch (Exception ignored) {}
+        }
+
+        cursor.close();
+        return entries;
     }
+
 
     // Add new user to the user_table
     void addUser(String name, String email, String password) {
@@ -136,39 +174,45 @@ public class WTDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    // Set or update weight in goal_table
-    void setGoalWeight(int goal_weight, String email) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    /**
+     * Sets or updates the user's goal weight.
+     *
+     * @return true if the goal was inserted or updated successfully;
+     *         false if validation fails or no rows were affected.
+     */
+    boolean setGoalWeight(int goal_weight, String email) {
+        // Validate input before touching the database
+        if (!isValidWeight(goal_weight) || email == null || email.isBlank()) {
+            return false;
+        }
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_GOAL_WEIGHT, goal_weight);
-        // Check if goal exists for the user
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_GOAL + " WHERE "
-                + COLUMN_USER_EMAIL + "=?", new String[]{email});
+        cv.put(COLUMN_USER_EMAIL, email);
+
+        Cursor cursor = db.rawQuery(
+                "SELECT 1 FROM " + TABLE_GOAL + " WHERE " + COLUMN_USER_EMAIL + "=?",
+                new String[]{email}
+        );
+
+        boolean success;
+
         if (cursor.moveToFirst()) {
             // Update existing goal
-            int result = db.update(TABLE_GOAL, cv, COLUMN_USER_EMAIL + "=?", new String[]{email});
-            if (result == -1) {
-                Toast.makeText(context, "Failed to update goal weight", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(context, "Goal weight updated!", Toast.LENGTH_SHORT).show();
-            }
+            success = db.update(
+                    TABLE_GOAL,
+                    cv,
+                    COLUMN_USER_EMAIL + "=?",
+                    new String[]{email}
+            ) > 0;
+        } else {
+            // Insert new goal
+            success = db.insert(TABLE_GOAL, null, cv) != -1;
         }
-        // Insert new goal
-        else {
-            cv.put(COLUMN_USER_EMAIL, email);
-             // Update weight goal value in the database
-            long result = db.insert(TABLE_GOAL, null, cv);
 
-            if (result == -1) {
-                Toast.makeText(context, "Failed to save goal weight", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(context, "Goal weight added!", Toast.LENGTH_SHORT).show();
-            }
-        }
         cursor.close();
+        return success;
     }
 
     // Read the goal weight from goal_table
@@ -183,47 +227,64 @@ public class WTDatabaseHelper extends SQLiteOpenHelper {
     Cursor readCurrentWeight(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COLUMN_WEIGHT + " FROM " + TABLE_LOG
-                + " WHERE " + COLUMN_USER_EMAIL + "=? ORDER BY " + COLUMN_ID + " DESC LIMIT 1", new String[]{email} );
+                + " WHERE " + COLUMN_USER_EMAIL + "=? ORDER BY " + COLUMN_DATE + " DESC, "
+                + COLUMN_ID + " DESC " + " LIMIT 1", new String[]{email} );
         return cursor;
     }
 
     // Read the name from user table
     Cursor readUserName(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + COLUMN_USER_NAME +" FROM " + TABLE_USER
                 + " WHERE " + COLUMN_USER_EMAIL + "=?", new String[]{email});
         return cursor;
     }
 
     // Remove weight entry from database
-    void deleteWeightEntry(int id, String email) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_LOG,  COLUMN_USER_EMAIL + "=? AND " +
-                COLUMN_ID + "=?", new String[]{email, String.valueOf(id)});
-
-        if (result == -1) {
-            Toast.makeText(context, "Failed to delete entry", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(context, "Entry deleted!", Toast.LENGTH_SHORT).show();
-        }
+    boolean deleteWeightEntry(int id, String email) {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TABLE_LOG,  COLUMN_USER_EMAIL + "=? AND " +
+                COLUMN_ID + "=?", new String[]{email, String.valueOf(id)}) > 0;
     }
 
-    // Update weight entry
-    void updateWeightEntry(int id, String date, int weight, String email) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    /**
+     * Updates an existing weight entry.
+     * Validation is performed before attempting the update.
+     * If validation fails, no database operation is executed.
+     * @return true if at least one row was updated; false otherwise
+     */
+    boolean updateWeightEntry(int id, String date, int weight, String email) {
+        if (!isValidWeight(weight) || !isValidDate(date)) {
+            return false;
+        }
+
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_WEIGHT, weight);
 
-        int result = db.update(TABLE_LOG, cv, COLUMN_USER_EMAIL + "=? AND " +
-                COLUMN_ID + "=?", new String[]{email, String.valueOf(id)});
+        int rows = db.update(
+                TABLE_LOG,
+                cv,
+                COLUMN_USER_EMAIL + "=? AND " + COLUMN_ID + "=?",
+                new String[]{email, String.valueOf(id)}
+        );
 
-        if (result == -1) {
-            Toast.makeText(context, "Failed to update entry", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(context, "Entry updated!", Toast.LENGTH_SHORT).show();
+        return rows > 0;
+    }
+
+    // Ensures weight values remain within realistic human bounds
+    private boolean isValidWeight(int weight) {
+        return weight >= MIN_WEIGHT && weight <= MAX_WEIGHT;
+    }
+
+    // Prevents invalid or future-dated entries from being stored
+    private boolean isValidDate(String dateString) {
+        try {
+            LocalDate date = LocalDate.parse(dateString);
+            return !date.isAfter(LocalDate.now());
+        } catch (Exception e) {
+            return false;
         }
     }
 }

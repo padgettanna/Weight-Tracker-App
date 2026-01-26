@@ -65,6 +65,52 @@
         app:layout_constraintTop_toBottomOf="@id/textGoalLabel" />
 
     <TextView
+        android:id="@+id/textAverageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="7-day average"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textCurrentWeightLabel" />
+
+    <TextView
+        android:id="@+id/textTrendLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="Trend"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textAverageLabel" />
+
+    <!-- Rolling Average -->
+    <TextView
+        android:id="@+id/textRollingAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="--"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textCurrentWeightLabel" />
+
+    <!-- Trend Indicator -->
+    <TextView
+        android:id="@+id/textTrend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="@dimen/vertical_spacing"
+        android:text="--"
+        android:textSize="@dimen/text_size_header"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textAverageLabel"  />
+
+    <TextView
         android:id="@+id/textCurrentValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textCurrentWeightLabel" />
+        app:layout_constraintTop_toBottomOf="@id/textTrend" />
 
     <EditText
         android:id="@+id/editTextNewWeight"
@@ -113,6 +159,7 @@
         android:ems="6"
         android:hint="@string/new_weight_hint"
         android:inputType="number"
+        android:maxLength="3"
         android:selectAllOnFocus="true"
         app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toStartOf="@id/buttonAdd"
@@ -160,6 +207,7 @@
         android:ems="6"
         android:hint="@string/new_weight_hint"
         android:inputType="number"
+        android:maxLength="3"
         android:selectAllOnFocus="true"
         app:layout_constraintHorizontal_bias="0.346"
         app:layout_constraintStart_toStartOf="@id/buttonUpdateGoalWeight"

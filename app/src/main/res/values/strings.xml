@@ -24,7 +24,8 @@
     <string name="update_or_delete">Update or Delete Entry</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
-    <string name="date_hint">yyyy-mm-dd</string>
+    <string name="date_hint">Select Date</string>
+    <string name="weight_hint">Weight (50–999)</string>
     <string name="email_placeholder">example@email.com</string>
     <string name="units">lb</string>
 </resources>

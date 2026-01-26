@@ -20,7 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.padgettanna.weighttracker.model.WeightEntry;
+
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Main screen for the Weight Tracker app.
@@ -39,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView goalWeightValueText;
     private TextView unitsText;
     private TextView currentWeightValueText;
+    private TextView rollingAverageText;
+    private TextView trendText;
+
     // Database helper
     private WTDatabaseHelper wtDB;
     // User email passed from login activity
@@ -66,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
         goalWeightValueText = findViewById(R.id.textGoalValue);
         unitsText = findViewById(R.id.textUnits2);
         currentWeightValueText = findViewById(R.id.textCurrentValue);
+        rollingAverageText = findViewById(R.id.textRollingAverage);
+        trendText = findViewById(R.id.textTrend);
+
         // Initialize database helper
         wtDB = new WTDatabaseHelper(MainActivity.this);
 
@@ -78,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Load user's profile and weight data from the database
         loadUserData();
+        updateInsights();
 
         // Disable save buttons
         saveButton.setEnabled(false);
@@ -115,18 +126,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String newWeight = newWeightEditText.getText().toString();
                 String goalWeight = goalWeightValueText.getText().toString();
+                if (goalWeight.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please set a goal weight first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!newWeight.isEmpty() && !goalWeight.isEmpty()) {
                     int currentWt = Integer.parseInt(newWeight);
                     int goalWt = Integer.parseInt(goalWeight);
-
-                    // Update current weight field
-                    currentWeightValueText.setText(newWeightEditText.getText().toString().trim());
-
                     LocalDate todayDate = LocalDate.now();
-                    // Add new weight to database with today's date
-                    wtDB.addWeight(todayDate.toString(), currentWt, userEmail);
 
+                    // Add new weight to database with today's date
+                    boolean success = wtDB.addWeight(todayDate.toString(), currentWt, userEmail);
+
+                    if (!success) { Toast.makeText(MainActivity.this, "Weight must be between 50 and 999.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    // Update current weight field, average, and trend
                     refreshCurrentWeight();
+                    updateInsights();
 
                     // Hide input field and save button
                     newWeightEditText.setText("");
@@ -172,11 +190,23 @@ public class MainActivity extends AppCompatActivity {
                 String newGoalWeight = newGoalWeightEditText.getText().toString().trim();
 
                 if (!newGoalWeight.isEmpty()) {
-                    int goalWt = Integer.parseInt(newGoalWeight);
+                    int goalWt;
+                    try {
+                        goalWt = Integer.parseInt(newGoalWeight);
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(MainActivity.this, "Goal weight must be a number.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                    // Update goal weight field and database
-                    wtDB.setGoalWeight(goalWt, userEmail);
-                    goalWeightValueText.setText(newGoalWeight);
+                    boolean success = wtDB.setGoalWeight(goalWt, userEmail);
+
+                    if (!success) {
+                        Toast.makeText(MainActivity.this, "Goal weight must be between 50 and 999.", Toast.LENGTH_LONG).show();
+                        return; // stay on screen
+                    }
+
+                    // Only update UI if DB write succeeded
+                    goalWeightValueText.setText(String.valueOf(goalWt));
 
                     // Hide input field and save button
                     newGoalWeightEditText.setText("");
@@ -237,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         refreshCurrentWeight();
+        updateInsights();
     }
 
     // Retrieves latest weight entry from the database
@@ -254,6 +285,47 @@ public class MainActivity extends AppCompatActivity {
         }
         if (cursorCurrentWeight != null) {
             cursorCurrentWeight.close();
+        }
+    }
+
+    private void updateInsights() {
+        List<WeightEntry> entries = wtDB.getWeightEntries(userEmail);
+        if (entries.isEmpty()) {
+            rollingAverageText.setText("--");
+            trendText.setText("No data");
+            return;
+        }
+
+        if (entries.size() == 1) {
+            rollingAverageText.setText(String.valueOf(entries.get(0).getWeight()));
+            trendText.setText("Not enough data");
+            return;
+        }
+
+        // Ensure chronological order
+        Collections.sort(entries,
+                (a, b) -> a.getDate().compareTo(b.getDate()));
+
+        // Rolling averages
+        List<Double> averages =
+                WeightAnalysisUtil.rollingAverage(entries, 7);
+
+        double latestAvg = averages.get(averages.size() - 1);
+        rollingAverageText.setText(String.format("%.1f", latestAvg));
+
+        // Trend detection
+        WeightAnalysisUtil.Trend trend =
+                WeightAnalysisUtil.detectTrend(averages, 0.5);
+
+        switch (trend) {
+            case DOWNWARD:
+                trendText.setText("Downward ↓");
+                break;
+            case UPWARD:
+                trendText.setText("Upward ↑");
+                break;
+            default:
+                trendText.setText("Stable →");
         }
     }
 
