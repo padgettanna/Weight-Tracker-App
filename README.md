@@ -1,32 +1,42 @@
-# Weight Tracker Mobile App
+# Weight Tracker Android App
 
-A mobile application to help users track their weight goals, monitor progress, and stay motivated.
+A mobile application that enables users to track weight goals, analyze historical data, and generate trend-based insights.
 
----
+Originally developed for CS 360 (Mobile Architecture & Programming), this project was later enhanced during my Computer Science Capstone to incorporate structured data handling and algorithmic analysis.
+
+## Features
+- Set and update personal weight goals 
+- Log daily weight entries  
+- Edit and delete previous entries
+- Chronological weight history log
+- Local SQLite persistence
+- Clean, mobile-optimized UI
+
+## Capstone Enhancements (Algorithms & Data Structures)
+This enhancement extended the app beyond simple data storage by introducing structured data processing and algorithmic insight generation:
+- Refactored database queries to return structured collections instead of raw values
+- Implemented chronological sorting logic prior to analysis
+- Designed and implemented a 7-day rolling average algorithm
+- Built trend detection logic based on changes in rolling averages
+- Displayed calculated trend indicators (Upward / Downward) on dashboard
+These changes transformed the app from a basic tracking tool into a data-driven progress analysis system.
 
 ## Tech Stack
 - **Platform:** Android  
 - **Language:** Java  
-- **Database:** SQLite  
-
----
-
-## Features
-- Set personal weight goals  
-- Log daily weight entries  
-- Receive notifications and reminders  
-- User-friendly interface for easy data input and tracking  
-
----
+- **Database:** SQLite
+- **Architecture Concepts:** Structured collections, sorting algorithms, rolling averages, trend analysis
 
 ## Installation
 1. Clone the repository
 2. Open the project in Android Studio
 3. Build and run the app on an emulator or Android device
-4. Use the app to set goals and log weight entries
 
 ## Screenshots
-<img width="200" height="424" alt="Screenshot_20251017_065957" src="https://github.com/user-attachments/assets/e648c867-80a4-4af1-98e2-df03e3919bc5" />
-<img width="200" height="424" alt="Screenshot_20251017_070139" src="https://github.com/user-attachments/assets/8b60db49-4ae1-4820-8df6-33304ea1352b" />
-<img width="200" height="424" alt="Screenshot_20251017_071100" src="https://github.com/user-attachments/assets/46ca69f2-f3b0-4e4e-beb7-ecb0d991d35b" />
+<p align="center">
+  <img src="screenshots/dashboard.png" width="200"/>
+  <img src="screenshots/log.png" width="200"/>
+  <img src="screenshots/update.png" width="200"/>
+  <img src="screenshots/update-date.png" width="200"/>
+</p>
 
